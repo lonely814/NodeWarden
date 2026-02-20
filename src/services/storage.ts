@@ -122,7 +122,7 @@ export class StorageService {
   // --- Database initialization ---
   // Strategy:
   // - Run only once per isolate.
-  // - Execute idempotent schema SQL on first DB use in each isolate.
+  // - Execute idempotent schema SQL on first request in each isolate.
   // - Keep statements idempotent so updates are safe.
   async initializeDatabase(): Promise<void> {
     if (StorageService.schemaVerified) return;

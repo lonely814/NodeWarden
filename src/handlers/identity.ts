@@ -113,7 +113,8 @@ export async function handleToken(request: Request, env: Env): Promise<Response>
     // Optional 2FA: enabled only when TOTP_SECRET is configured in Workers env.
     let trustedTwoFactorTokenToReturn: string | undefined;
     if (isTotpEnabled(env.TOTP_SECRET)) {
-      if (twoFactorProvider !== undefined && String(twoFactorProvider) !== '0') {
+      const normalizedTwoFactorProvider = String(twoFactorProvider ?? '').trim();
+      if (normalizedTwoFactorProvider !== '' && normalizedTwoFactorProvider !== '0') {
         return identityErrorResponse('Unsupported two-factor provider', 'invalid_grant', 400);
       }
 
